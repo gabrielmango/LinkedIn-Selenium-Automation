@@ -78,6 +78,22 @@ def main():
             human_scroll(driver)
             time.sleep(random.uniform(2, 4))
 
+        lista_xpath = "/html/body/div[6]/div[3]/div/div/div/div/div[2]/div/div/main/section/div/div[2]/div[1]/div/div/div/ul"
+        lista = driver.find_element(By.XPATH, lista_xpath)
+
+        itens = lista.find_elements(By.TAG_NAME, "li")
+
+        hrefs = []
+        for i, item in enumerate(itens, start=1):
+            link_xpath = f"/html/body/div[6]/div[3]/div/div/div/div/div[2]/div/div/main/section/div/div[2]/div[1]/div/div/div/ul/li[{i}]/div/div/div/div[2]/div/div[1]/div/span/span/a"
+            try:
+                link_element = driver.find_element(By.XPATH, link_xpath)
+                href = link_element.get_attribute("href")
+                if href:
+                    hrefs.append(href)
+            except Exception as e:
+                print(f"Erro ao pegar href do item {i}: {e}")
+
     finally:
         driver.quit()
 
