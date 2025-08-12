@@ -69,6 +69,15 @@ def main():
 
         human_scroll(driver)
 
+        driver.get(
+            "https://www.linkedin.com/mynetwork/network-manager/people-follow/followers/"
+        )
+        time.sleep(random.uniform(4, 6))
+
+        for _ in range(1):
+            human_scroll(driver)
+            time.sleep(random.uniform(2, 4))
+
     finally:
         driver.quit()
 
