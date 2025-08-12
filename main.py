@@ -69,6 +69,37 @@ def main():
 
         human_scroll(driver)
 
+        driver.get(
+            "https://www.linkedin.com/mynetwork/network-manager/people-follow/followers/"
+        )
+        time.sleep(random.uniform(4, 6))
+
+        for _ in range(1):
+            human_scroll(driver)
+            time.sleep(random.uniform(2, 4))
+
+        lista_xpath = "/html/body/div[6]/div[3]/div/div/div/div/div[2]/div/div/main/section/div/div[2]/div[1]/div/div/div/ul"
+        lista = driver.find_element(By.XPATH, lista_xpath)
+
+        itens = lista.find_elements(By.TAG_NAME, "li")
+
+        hrefs = []
+        for i, item in enumerate(itens, start=1):
+            link_xpath = f"/html/body/div[6]/div[3]/div/div/div/div/div[2]/div/div/main/section/div/div[2]/div[1]/div/div/div/ul/li[{i}]/div/div/div/div[2]/div/div[1]/div/span/span/a"
+            try:
+                link_element = driver.find_element(By.XPATH, link_xpath)
+                href = link_element.get_attribute("href")
+                if href:
+                    hrefs.append(href)
+            except Exception as e:
+                print(f"Erro ao pegar href do item {i}: {e}")
+
+        with open("conexoes_links.txt", "w", encoding="utf-8") as f:
+            for href in hrefs:
+                f.write(href + "\n")
+
+        print(f"{len(hrefs)} links salvos em conexoes_links.txt")
+
     finally:
         driver.quit()
 
