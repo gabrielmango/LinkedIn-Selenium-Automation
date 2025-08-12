@@ -94,6 +94,12 @@ def main():
             except Exception as e:
                 print(f"Erro ao pegar href do item {i}: {e}")
 
+        with open("conexoes_links.txt", "w", encoding="utf-8") as f:
+            for href in hrefs:
+                f.write(href + "\n")
+
+        print(f"{len(hrefs)} links salvos em conexoes_links.txt")
+
     finally:
         driver.quit()
 
